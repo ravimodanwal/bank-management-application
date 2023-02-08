@@ -1,0 +1,113 @@
+package bank;
+import java.util.*;
+class bankApplication {
+
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the customer name and id tp access your account");
+		String name=sc.nextLine();
+		String customerID=sc.nextLine();
+		bankAccount obj1=new bankAccount(name,customerID);
+		obj1.menu();
+	}
+
+}
+
+class bankAccount{
+	double balance;
+	double prevTrans;
+	String customerName;
+	String customerID;
+	bankAccount(String customerName,String customerID){
+		this.customerName=customerName;
+		this.customerID=customerID;
+		
+	}
+	void deposit(double ammount) {
+		if(ammount!=0) {
+			balance+=ammount;
+			prevTrans=ammount;
+		}
+	}
+	void withdraw(double ammount) {
+		if(balance!=0 && balance>=ammount) {
+			balance-=ammount;
+			prevTrans=-ammount;
+		}
+		else if(balance<ammount) {
+			System.out.println("bank balance is insufficient");
+		}
+		
+	}
+	void getPrevTrans() {
+		if(balance>0) {
+			System.out.println("deposit ammount:"+prevTrans);
+		}
+		else if(balance<0) {
+			System.out.println("withdrawn:"+Math.abs(prevTrans));
+		}
+		else {
+			System.out.println("no transaction occured");
+		}
+	}
+	void menu() {
+		char option;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Welcome "+customerName);
+		System.out.println("Your ID:"+customerID);
+		System.out.println("\n");
+		System.out.println("a) check balance");
+		System.out.println("b) deposit ammount");
+		System.out.println("c) withdraw ammount");
+		System.out.println("d) previous transaction");
+			System.out.println("e) exit");
+			do {
+				System.out.println("*******************");
+				System.out.println("choose an option");
+				option=sc.next().charAt(0);
+				System.out.println("\n");
+				
+				switch(option) {
+				case 'a':
+					System.out.println(".....");
+					System.out.println("balance ="+balance);
+					System.out.println(".....");
+					System.out.println("\n");
+					break;
+				case 'b':
+					System.out.println(".....");
+					System.out.println("enter ammount to deposit :");
+					System.out.println(".....");
+					double ammount=sc.nextDouble();
+					deposit(ammount);
+					System.out.println("\n");
+					break;
+				case 'c':
+					System.out.println(".....");
+					System.out.println("enter ammount to withdraw:");
+					System.out.println(".....");
+					double amtW=sc.nextDouble();
+					withdraw(amtW);
+					System.out.println("\n");
+					break;
+				case 'd':
+					System.out.println(".....");
+					System.out.println("previous transaction:");
+					getPrevTrans();
+					System.out.println(".....");
+					System.out.println("\n");
+					break;
+				case'e':
+					System.out.println(".....");
+					break;
+					default:
+						System.out.println("choose a correct option to proceed");
+						break;
+				}
+				
+			}while(option!='e');
+			System.out.println("thank you for using our banking services");
+	}
+}
+ 
